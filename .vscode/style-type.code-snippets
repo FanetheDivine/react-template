@@ -1,0 +1,14 @@
+{
+  "className?: string": {
+    "prefix": ["className?: string"],
+    "body": ["className?: string"],
+  },
+  "style?: React.CSSProperties": {
+    "prefix": ["style?: React.CSSProperties"],
+    "body": ["style?: React.CSSProperties"],
+  },
+  "import styles from './styles.module.scss'": {
+    "prefix": ["import styles from './styles.module.scss'"],
+    "body": ["import styles from './styles.module.scss'"],
+  },
+}
