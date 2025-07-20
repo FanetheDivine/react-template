@@ -70,12 +70,12 @@ const { data, error, isLoading, isValidating, mutate } = useSWR(key, fetcher, { 
   const startSuspension = useSuspension()
   const { mutate } = useSWR(xxx)
 
-  onClick={()=>startSuspension(mutate)} // 主动进入suspense
+  onClick={() => startSuspension(mutate)} // 主动进入suspense
   ```
 
 ## useSWRImmutable
 
-默认的情况下,缓存过期、重新联网、重新聚焦网页时,都会重新请求数据,但这个`useSWRImmutable`不会如此如此.  
+默认的情况下,缓存过期、重新联网、重新聚焦网页时,都会重新请求数据,但这个`useSWRImmutable`不会如此.  
 用于获取不需要更新的数据
 
 ```ts
@@ -116,4 +116,4 @@ const { trigger, data, error, isMutating, reset } = useSWRMutation(key, fetcher,
 - `trigger`调用`fetcher`.参数1会被作为`fetcher`参数2的一部分,参数2是配置
 - 虽然`data`是独立存在的,但是`useSWRMutation`可以访问`useSWR`的缓存,不会出现竞态问题
 
-可以把这个hook理解为`fetcher`与`error`、`loading`两个state以及它们间逻辑的组合
+可以把这个hook理解为`fetcher`与`error`、`loading`两个state以及它们间逻辑的聚合
