@@ -57,7 +57,7 @@ importers:
         specifier: ^1.86.3
         version: 1.89.2
       swr:
-        specifier: ^2.3.2
+        specifier: ^2.3.4
         version: 2.3.4(react@18.3.1)
       tailwind-merge:
         specifier: ^3.1.0
