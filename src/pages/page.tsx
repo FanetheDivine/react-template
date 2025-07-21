@@ -2,6 +2,8 @@ import { FC, useState } from 'react'
 import { useNavigate } from 'react-router'
 import { Button, Space } from 'antd'
 import useSWR from 'swr'
+import { AutoFill, scrollbar } from '@/styles'
+import { cn } from '@/utils/classnames'
 import { sleep } from '@/utils/sleep'
 import { useSuspension } from '@/utils/suspense'
 
@@ -24,17 +26,19 @@ const Page: FC = () => {
   )
 
   return (
-    <div className='flex flex-col'>
-      <span>result:{data}</span>
-      <Space.Compact>
-        <Button onClick={() => setType('v1')}>set v1</Button>
-        <Button onClick={() => setType('v2')}>set v2</Button>
-        <Button onClick={() => setType('error')}>set error</Button>
-        <Button onClick={() => startSuspension(mutate)}>
-          {isValidating ? 'fetching' : 'refetch'}
-        </Button>
-        <Button onClick={() => navigate('/404')}>to 404</Button>
-      </Space.Compact>
+    <div className={cn(AutoFill, 'overflow-auto', scrollbar)}>
+      <div className='flex min-h-[1000px] flex-col'>
+        <span>result:{data}</span>
+        <Space.Compact>
+          <Button onClick={() => setType('v1')}>set v1</Button>
+          <Button onClick={() => setType('v2')}>set v2</Button>
+          <Button onClick={() => setType('error')}>set error</Button>
+          <Button onClick={() => startSuspension(mutate)}>
+            {isValidating ? 'fetching' : 'refetch'}
+          </Button>
+          <Button onClick={() => navigate('/404')}>to 404</Button>
+        </Space.Compact>
+      </div>
     </div>
   )
 }

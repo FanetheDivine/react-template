@@ -1,0 +1,10 @@
+@use './index.scss' as scrollbarStyles;
+
+.scrollbar {
+  @include scrollbarStyles.scrollbarWebKit;
+}
+
+.scrollbarHidden {
+  @include scrollbarStyles.scrollbar(transparent, transparent, none);
+  @include scrollbarStyles.scrollbarWebKit(transparent, transparent, 0);
+}
