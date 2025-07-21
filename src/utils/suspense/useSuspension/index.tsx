@@ -2,7 +2,7 @@ import { useCallback, useState } from 'react'
 
 /**
  * 主动唤起Suspense
- * @returns 接受一个Promise或者此类型的getter 唤起Suspense
+ * @returns 接受一个Promise或者此类型的getter以唤起Suspense
  * @example
  * ```ts
  * const startSuspension = useSuspension()
