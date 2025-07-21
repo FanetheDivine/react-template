@@ -1,0 +1,5 @@
+@use './index.scss' as scrollbarStyles;
+
+.scrollbar {
+  @include scrollbarStyles.scrollbar;
+}

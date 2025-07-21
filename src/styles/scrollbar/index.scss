@@ -1,0 +1,12 @@
+@mixin scrollbar(
+  // 滑块颜色
+  $thumbColor: #d9d9d9,
+  // 轨道颜色
+  $trackColor: transparent,
+  // 滚动条宽度
+  $width: auto
+) {
+  scrollbar-width: auto;
+  scrollbar-color: $thumbColor $trackColor;
+  scrollbar-gutter: stable both-edges;
+}

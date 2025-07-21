@@ -21,7 +21,7 @@
 
 ## 其他
 
-- `@/styles`定义了常见的样式
+- `@/styles`定义了常见的样式和`@minix`
 - `@/types`定义了常见的类型
   - `Style` `className`和`style`的类型
   - `ValueController` `value`&`onChange`
