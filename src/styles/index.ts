@@ -13,3 +13,6 @@ export { absoluteCenterClassName as AbsoluteCenter }
  * 可以通过`@/styles/scrollbar/index.scss`的`@minix scrollbar`自定义滚动条
  */
 export const scrollbar = scrollbarStyles.scrollbar
+
+/** 隐藏滚动条 */
+export const scrollbarHidden = scrollbarStyles.scrollbarHidden
