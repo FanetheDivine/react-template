@@ -2,7 +2,7 @@ import { FC, useState } from 'react'
 import { useNavigate } from 'react-router'
 import { Button, Space } from 'antd'
 import useSWR from 'swr'
-import { AutoFill, scrollbar } from '@/styles'
+import { AutoFill, Scrollbar } from '@/styles'
 import { cn } from '@/utils/classnames'
 import { sleep } from '@/utils/sleep'
 import { useSuspension } from '@/utils/suspense'
@@ -26,7 +26,7 @@ const Page: FC = () => {
   )
 
   return (
-    <div className={cn(AutoFill, 'overflow-auto', scrollbar)}>
+    <div className={cn(AutoFill, 'overflow-auto', Scrollbar)}>
       <div className='flex min-h-[1000px] flex-col'>
         <span>result:{data}</span>
         <Space.Compact>
