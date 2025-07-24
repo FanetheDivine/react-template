@@ -16,8 +16,7 @@
 
 - `classnames` 使用`clsx` `tailwind-merge`合并样式
 - `sleep` 等待一段时间
-- `suspense/useSuspension` 主动唤起`Suspense`
-- `suspense/withSuspense` 为`ReactNode`或者一个组件包裹`Suspense`以配合`useSWR`
+- `withSuspense` 为`ReactNode`或者一个组件包裹`Suspense`以配合`useSWR`
 
 ## 其他
 

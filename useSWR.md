@@ -24,14 +24,18 @@ const { data, error, isLoading, isValidating, mutate } = useSWR(key, fetcher, op
 - 当`fetcher`抛出异常,它的错误会作为`error`出现
 - 只要有一个`fetcher`正在执行中,`isValidating`为true
 - 仅当数据未加载且有`fetcher`正在执行中,`isLoading`为true(即没命中缓存并调用`fetcher`的时候)
-- `mutate`可以强制将data设置为某个值,其参数2是本次调用配置,可以在设置值后调用`fetcher`获取最新数据.可以用于乐观更新.
-- 如果`mutate`的参数1不传或者是`undefined`,则会清除缓存,且不设置`data`.此时的`data`虽然不在缓存中,但依旧是"同一`key`的旧数据",没有loading,只有validating
 - `useSWR`的`key`变化后,`data`不会保留
 - `useSWR`虽然返回多个值,但是只有被使用的值才会引起组件渲染
   ```ts
   const { data } = useSWR(xxx)
   ```
   这里只访问了返回值的`data`属性,那么`isLoading` `isValidating`等的变化不会引发组件的重新渲染.
+
+对`mutate`的说明
+
+- 无参数调用`mutate`会重新启用数据校验
+- `mutate(newData,options)`,此时`data`会被立刻设置为`newData`(即使是`undefined`),并按照`options`执行后续
+- 如果`newData`是`undefined`, 且`options.populateCache`是`true`(默认值),那么当前`key`的缓存会被清空,后续不会被命中
 
 对`key`的说明:
 
@@ -62,7 +66,7 @@ const { data, error, isLoading, isValidating, mutate } = useSWR(key, fetcher, { 
 - 常规情况下`isLoading=true`时,suspense模式下会进入`Suspense`.即，仅在没有命中缓存的情况下进入`Suspense`
 - 如果`key`是空值,或者`key`的`getter`函数返回空值、抛出异常,useSWR不会进入`loading`,无法进入`Suspense`.此时`data`可能为`undefined`
 - 如果`keepPreviousData: true`,key变化的时候data保留上一次的值,此时不会进入suspense
-- 调用`mutate`无法进入suspense,但可以通过`isValidating`判断是否获取最新数据,以展示不同的ui.也可以使用`@/utils/suspense/useSuspension`,主动触发suspense
+- 调用`mutate`时,只有其参数1是`undefined`,且`options.populateCache`是`true`(默认值),才会进入suspense
 
   ```ts
   import { useSuspension } from '@/utils/suspense'
