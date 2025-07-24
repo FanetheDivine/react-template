@@ -54,5 +54,10 @@
     "typescript-eslint": "^8.26.1",
     "vite": "^6",
     "vite-plugin-pages": "^0.33.1"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "@swc/core"
+    ]
   }
 }
