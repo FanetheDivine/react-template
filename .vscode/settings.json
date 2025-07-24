@@ -1,6 +1,7 @@
 {
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnSave": true,
+  "files.autoSave": "off",
   "editor.quickSuggestionsDelay": 0,
   "editor.parameterHints.enabled": false,
   "editor.autoClosingBrackets": "always",
