@@ -1,11 +1,13 @@
 declare module 'value-controller' {
   type ValueControllerOptions = {
-    /** 是否使value不可选 */
+    /**
+     * 是否使value不可选\
+     * 会影响onChange传数值类型时是否可选\
+     * 会影响onChange传的updater是否可选
+     */
     strictValue?: boolean
     /** 是否使onChange不可选 */
     strictOnChange?: boolean
-    /** 是否使onChange的参数不可选 */
-    strictNewValue?: boolean
     /** 是否允许onChange接受一个更新函数 */
     updater?: boolean
   }
@@ -36,8 +38,8 @@ declare module 'value-controller' {
   type OnChange<
     V,
     R,
-    Options extends Pick<ValueControllerOptions, 'strictNewValue' | 'strictValue' | 'updater'>,
-  > = Options['strictNewValue'] extends true
+    Options extends Pick<ValueControllerOptions, 'strictValue' | 'updater'>,
+  > = Options['strictValue'] extends true
     ? (arg: OnChangeArg<V, Options>) => R
     : (arg?: OnChangeArg<V, Options>) => R
 

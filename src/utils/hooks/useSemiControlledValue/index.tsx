@@ -1,6 +1,6 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { useEvent } from '@reactuses/core'
-import type { ValueController, ValueControllerOptions, OnChangeArg } from 'value-controller'
+import type { ValueController, ValueControllerOptions, OnChange } from 'value-controller'
 import { useImmediateEffect } from '../useImmediateEffect'
 
 /**
@@ -27,19 +27,22 @@ export function useSemiControlledValue<
   const { value, onChange } = valueController
   const [changedValue, setChangedValue] = useState(value)
 
-  let currentValue = value
+  const currentValueRef = useRef(value)
   useImmediateEffect(() => {
-    currentValue = changedValue
+    currentValueRef.current = changedValue
   }, [changedValue])
   useImmediateEffect(() => {
-    currentValue = value
+    currentValueRef.current = value
   }, [value])
+  const currentValue = currentValueRef.current as V
 
-  const onInnerChange = useEvent((arg: OnChangeArg<V, Options & { updater: true }>) => {
-    const newValue = typeof arg === 'function' ? arg(currentValue) : arg
-    setChangedValue(newValue)
-    return onChange?.(newValue)
-  })
+  const onInnerChange = useEvent<OnChange<V, R | undefined, Options & { updater: true }>>(
+    (arg: any) => {
+      const newValue = typeof arg === 'function' ? arg(currentValue) : arg
+      setChangedValue(newValue)
+      return onChange?.(newValue)
+    },
+  )
 
   return [currentValue, onInnerChange] as const
 }
