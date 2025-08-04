@@ -22,8 +22,7 @@ export function useSemiControlledValue<
   V = any,
   // eslint-disable-next-line @typescript-eslint/no-empty-object-type
   Options extends Omit<ValueControllerOptions, 'updater'> = {},
-  R = void,
->(valueController: ValueController<V, Options, R>) {
+>(valueController: ValueController<V, Options>) {
   const { value, onChange } = valueController
   const [changedValue, setChangedValue] = useState(value)
 
@@ -36,13 +35,11 @@ export function useSemiControlledValue<
   }, [value])
   const currentValue = currentValueRef.current as V
 
-  const onInnerChange = useEvent<OnChange<V, R | undefined, Options & { updater: true }>>(
-    (arg: any) => {
-      const newValue = typeof arg === 'function' ? arg(currentValue) : arg
-      setChangedValue(newValue)
-      return onChange?.(newValue)
-    },
-  )
+  const onInnerChange = useEvent<OnChange<V, void, Options & { updater: true }>>((arg: any) => {
+    const newValue = typeof arg === 'function' ? arg(currentValue) : arg
+    setChangedValue(newValue)
+    onChange?.(newValue)
+  })
 
   return [currentValue, onInnerChange] as const
 }
