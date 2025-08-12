@@ -4,6 +4,7 @@ import { Button, Space } from 'antd'
 import useSWR from 'swr'
 import { AutoFill, Scrollbar } from '@/styles'
 import { cn } from '@/utils/classnames'
+import { loadFile } from '@/utils/loadFile'
 import { sleep } from '@/utils/sleep'
 
 let count = 0
@@ -23,6 +24,14 @@ const Page: FC = () => {
   return (
     <div className={cn(AutoFill, 'overflow-auto', Scrollbar)}>
       <div className='flex min-h-[1000px] flex-col'>
+        <Button
+          onClick={async () => {
+            const files = await loadFile({ webkitdirectory: false })
+            console.log(files)
+          }}
+        >
+          loadFile
+        </Button>
         <span>result:{data}</span>
         <Space.Compact>
           <Button onClick={() => setType('v1')}>set v1</Button>

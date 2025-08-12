@@ -18,6 +18,7 @@
 - `sleep` 等待一段时间
 - `withSuspense` 为`ReactNode`或者一个组件包裹`Suspense`以配合`useSWR`
 - `hooks/` 封装了常见逻辑
+- `loadFile` 函数式加载本地文件
 
 ## 其他
 
