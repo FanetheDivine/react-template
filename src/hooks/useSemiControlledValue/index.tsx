@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react'
 import { useMemoizedFn } from 'ahooks'
-import type { ValueController, ValueControllerOptions, OnChange } from 'value-controller'
+import type { ValueController, ValueControllerOptions, OnChange, ValueObj } from 'value-controller'
 import { useImmediateEffect } from '../useImmediateEffect'
 
 /**
@@ -21,11 +21,16 @@ import { useImmediateEffect } from '../useImmediateEffect'
 export function useSemiControlledValue<
   V = any,
   // eslint-disable-next-line @typescript-eslint/no-empty-object-type
-  Options extends Omit<ValueControllerOptions, 'updater'> = {},
->(valueController: ValueController<V, Options>) {
+  Options extends Omit<ValueControllerOptions, 'forbidUpdater'> = {},
+>(
+  valueController: ValueController<
+    V,
+    // onChange不会接受到函数参数
+    Omit<Options, 'forbidUpdater'> & { forbidUpdater: true }
+  >,
+) {
   const { value, onChange } = valueController
   const [changedValue, setChangedValue] = useState(value)
-
   const currentValueRef = useRef(value)
   useImmediateEffect(() => {
     currentValueRef.current = changedValue
@@ -33,9 +38,10 @@ export function useSemiControlledValue<
   useImmediateEffect(() => {
     currentValueRef.current = value
   }, [value])
-  const currentValue = currentValueRef.current as V
+  const currentValue = currentValueRef.current as ValueObj<V, Options>['value']
 
-  const onInnerChange = useMemoizedFn<OnChange<V, void, Options & { updater: true }>>(
+  // 对外暴露的更新函数可以接受更新函数
+  const onInnerChange: OnChange<V, void, Omit<Options, 'forbidUpdater'>> = useMemoizedFn(
     (arg: any) => {
       const newValue = typeof arg === 'function' ? arg(currentValue) : arg
       setChangedValue(newValue)
