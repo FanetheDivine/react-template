@@ -3,8 +3,7 @@ import { useMemoizedFn } from 'ahooks'
 import { ValueController, ValueControllerOptions } from 'value-controller'
 import { useSemiControlledValue } from '../useSemiControlledValue'
 
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
-export type CompositionProps<Options extends ValueControllerOptions = {}> = {
+export type CompositionProps<Options extends ValueControllerOptions = object> = {
   value: Options['strictValue'] extends true ? string : string | undefined
   onChange: ChangeEventHandler<HTMLInputElement>
   onCompositionStart: () => void
@@ -23,10 +22,7 @@ export type CompositionProps<Options extends ValueControllerOptions = {}> = {
  * ```
  */
 export function useComposition<StrictValue extends boolean>(
-  valueController: ValueController<
-    string,
-    { strictOnChangeArg: true; forbidUpdater: true; strictValue: StrictValue }
-  >,
+  valueController: ValueController<string, { updater: false; strictValue: StrictValue }>,
 ) {
   const isComposing = useRef(false)
   const [value, onInnerChange] = useSemiControlledValue({

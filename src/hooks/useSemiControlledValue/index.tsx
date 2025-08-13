@@ -20,13 +20,12 @@ import { useImmediateEffect } from '../useImmediateEffect'
  */
 export function useSemiControlledValue<
   V = any,
-  // eslint-disable-next-line @typescript-eslint/no-empty-object-type
-  Options extends Omit<ValueControllerOptions, 'forbidUpdater'> = {},
+  Options extends Omit<ValueControllerOptions, 'updater'> = object,
 >(
   valueController: ValueController<
     V,
     // onChange不会接受到函数参数
-    Omit<Options, 'forbidUpdater'> & { forbidUpdater: true }
+    Omit<Options, 'updater'> & { updater: false }
   >,
 ) {
   const { value, onChange } = valueController
@@ -41,13 +40,11 @@ export function useSemiControlledValue<
   const currentValue = currentValueRef.current as ValueObj<V, Options>['value']
 
   // 对外暴露的更新函数可以接受更新函数
-  const onInnerChange: OnChange<V, void, Omit<Options, 'forbidUpdater'>> = useMemoizedFn(
-    (arg: any) => {
-      const newValue = typeof arg === 'function' ? arg(currentValue) : arg
-      setChangedValue(newValue)
-      onChange?.(newValue)
-    },
-  )
+  const onInnerChange: OnChange<V, void, Omit<Options, 'updater'>> = useMemoizedFn((arg: any) => {
+    const newValue = typeof arg === 'function' ? arg(currentValue) : arg
+    setChangedValue(newValue)
+    onChange?.(newValue)
+  })
 
   return [currentValue, onInnerChange] as const
 }

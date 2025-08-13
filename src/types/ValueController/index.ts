@@ -1,25 +1,21 @@
 declare module 'value-controller' {
   export type ValueControllerOptions = {
-    /**
-     * 是否使value不可选\
-     * 会影响更新函数的参数是否可选
-     */
+    /** 此项为true时value非可选 更新函数的参数非可选 */
     strictValue?: boolean
-    /** 是否使onChange不可选 */
+    /** 此项为true时onChange非可选 */
     strictOnChange?: boolean
-    /** 是否使onChange的参数不可选 */
+    /** 此项为false时onChange的参数可选 */
     strictOnChangeArg?: boolean
-    /** 是否禁止onChange接受一个更新函数 */
-    forbidUpdater?: boolean
+    /** 此项为false时onChange不接受更新函数 */
+    updater?: boolean
   }
 
   /**
    * 非函数类型的值`value`与其控制器`onChange`\
-   * 可以在第二个参数处进行一些配置\
-   * 默认允许onChange接受更新函数 其余全部可选
+   * 可以在第二个类型参数处进行配置\
+   * 默认情况下 onChange的参数非可选 且可以接受更新函数
    */
-  // eslint-disable-next-line @typescript-eslint/no-empty-object-type
-  export type ValueController<V = any, Options extends ValueControllerOptions = {}, R = void> =
+  export type ValueController<V = any, Options extends ValueControllerOptions = object, R = void> =
     isFunction<V> extends true ? never : ValueObj<V, Options> & OnChangeObj<V, R, Options>
 
   export type ValueObj<
@@ -39,14 +35,14 @@ declare module 'value-controller' {
     V,
     R,
     Options extends ValueControllerOptions,
-  > = Options['strictOnChangeArg'] extends true
-    ? (arg: OnChangeArg<V, Options>) => R
-    : (arg?: OnChangeArg<V, Options>) => R
+  > = Options['strictOnChangeArg'] extends false
+    ? (arg?: OnChangeArg<V, Options>) => R
+    : (arg: OnChangeArg<V, Options>) => R
 
   export type OnChangeArg<
     V,
     Options extends ValueControllerOptions,
-  > = Options['forbidUpdater'] extends true ? V : V | Updater<V, Options>
+  > = Options['updater'] extends false ? V : V | Updater<V, Options>
 
   export type Updater<
     V,
