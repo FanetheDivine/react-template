@@ -1,6 +1,6 @@
 # react + antd + tailwindcss 项目模板
 
-- react-use 常见 hook
+- ahooks 常见 hook
 - @/utils/classnames 使用clsx和tailwind-marge合并多个样式类名
 - immer & use-immer 处理复杂、嵌套的状态
 - zustand 简单的全局状态管理工具
