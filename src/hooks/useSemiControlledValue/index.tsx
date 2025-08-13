@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react'
-import { useEvent } from '@reactuses/core'
+import { useMemoizedFn } from 'ahooks'
 import type { ValueController, ValueControllerOptions, OnChange } from 'value-controller'
 import { useImmediateEffect } from '../useImmediateEffect'
 
@@ -35,11 +35,13 @@ export function useSemiControlledValue<
   }, [value])
   const currentValue = currentValueRef.current as V
 
-  const onInnerChange = useEvent<OnChange<V, void, Options & { updater: true }>>((arg: any) => {
-    const newValue = typeof arg === 'function' ? arg(currentValue) : arg
-    setChangedValue(newValue)
-    onChange?.(newValue)
-  })
+  const onInnerChange = useMemoizedFn<OnChange<V, void, Options & { updater: true }>>(
+    (arg: any) => {
+      const newValue = typeof arg === 'function' ? arg(currentValue) : arg
+      setChangedValue(newValue)
+      onChange?.(newValue)
+    },
+  )
 
   return [currentValue, onInnerChange] as const
 }
