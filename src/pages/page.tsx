@@ -3,9 +3,7 @@ import { Link } from 'react-router'
 import { Button, Space } from 'antd'
 import useSWR from 'swr'
 import { AutoFill, Scrollbar } from '@/styles'
-import { cn } from '@/utils/classnames'
-import { loadFile } from '@/utils/loadFile'
-import { sleep } from '@/utils/sleep'
+import { loadFile, sleep, cn } from '@/utils'
 
 let count = 0
 const Page: FC = () => {

@@ -14,11 +14,12 @@
 
 `@/utils`里提供了常用的函数
 
-- `classnames` 使用`clsx` `tailwind-merge`合并样式
-- `sleep` 等待一段时间
-- `withSuspense` 为`ReactNode`或者一个组件包裹`Suspense`以配合`useSWR`
-- `hooks/` 封装了常见逻辑
-- `loadFile` 函数式加载本地文件
+- `hooks/` 封装了常见hook
+- `index.ts` 导出常见函数
+  - `loadFile` 函数式加载本地文件
+  - `classnames` 使用`clsx` `tailwind-merge`合并样式
+  - `sleep` 等待一段时间
+  - `withSuspense` 为`ReactNode`或者一个组件包裹`Suspense`
 
 ## 其他
 

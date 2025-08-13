@@ -1,6 +1,6 @@
 import { FC, PropsWithChildren } from 'react'
 import { AutoFill } from '@/styles'
-import { cn } from '@/utils/classnames'
+import { cn } from '@/utils'
 
 const Layout: FC<PropsWithChildren> = (props) => {
   return (

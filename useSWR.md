@@ -68,15 +68,6 @@ const { data, error, isLoading, isValidating, mutate } = useSWR(key, fetcher, { 
 - 如果`keepPreviousData: true`,key变化的时候data保留上一次的值,此时不会进入suspense
 - 调用`mutate`时,只有其参数1是`undefined`,且`options.populateCache`是`true`(默认值),才会进入suspense
 
-  ```ts
-  import { useSuspension } from '@/utils/suspense'
-
-  const startSuspension = useSuspension()
-  const { mutate } = useSWR(xxx)
-
-  onClick={() => startSuspension(mutate)} // 主动进入suspense
-  ```
-
 ## useSWRImmutable
 
 默认的情况下,缓存过期、重新联网、重新聚焦网页时,都会重新请求数据,但这个`useSWRImmutable`不会如此.  

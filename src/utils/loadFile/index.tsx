@@ -6,8 +6,8 @@ type Config = Partial<Pick<HTMLInputElement, 'accept' | 'multiple' | 'webkitdire
 
 /**
  * 函数式加载本地文件
- * @returns 获取上传的文件。\
- * 注意，若取消上传，这个promise会下一次上传前进入rejected，而不是立刻变化。
+ * @returns 获取上传的文件\
+ * 注意，若取消上传，这个promise会下一次上传前进入rejected，而不是立刻变化
  */
 export function loadFile(config: Config = {}) {
   const { accept = '', multiple = false, webkitdirectory = false } = config
