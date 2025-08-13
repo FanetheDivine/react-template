@@ -14,12 +14,17 @@
 
 `@/utils`里提供了常用的函数
 
-- `hooks/` 封装了常见hook
-- `index.ts` 导出常见函数
-  - `loadFile` 函数式加载本地文件
-  - `classnames` 使用`clsx` `tailwind-merge`合并样式
-  - `sleep` 等待一段时间
-  - `withSuspense` 为`ReactNode`或者一个组件包裹`Suspense`
+- `loadFile` 函数式加载本地文件
+- `classnames` 使用`clsx` `tailwind-merge`合并样式
+- `sleep` 等待一段时间
+- `withSuspense` 为`ReactNode`或者一个组件包裹`Suspense`
+
+## hooks
+
+`@/hooks`提供了常见的hook
+
+- `useImmediateEffect` 在依赖项变化后 同步地执行副作用
+- `useSemiControlledValue` 取得一个值的半受控版本 可以自由变更 且在原始值变化时突变
 
 ## 其他
 
