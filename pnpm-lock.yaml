@@ -59,6 +59,9 @@ importers:
       tailwind-merge:
         specifier: ^3.1.0
         version: 3.3.1
+      ts-pattern:
+        specifier: ^5.8.0
+        version: 5.8.0
       use-immer:
         specifier: ^0.11.0
         version: 0.11.0(immer@10.1.1)(react@18.3.1)
@@ -2277,6 +2280,9 @@ packages:
     engines: {node: '>=18.12'}
     peerDependencies:
       typescript: '>=4.8.4'
+
+  ts-pattern@5.8.0:
+    resolution: {integrity: sha512-kIjN2qmWiHnhgr5DAkAafF9fwb0T5OhMVSWrm8XEdTFnX6+wfXwYOFjeF86UZ54vduqiR7BfqScFmXSzSaH8oA==}
 
   tslib@2.8.1:
     resolution: {integrity: sha512-oJFu94HQb+KVduSUQL7wnpmqnfmLsOA/nAh6b6EH0wCEoK0/mPeXU6c3wKDV83MkOuHPRHtSXKKU99IBazS/2w==}
@@ -4531,6 +4537,8 @@ snapshots:
   ts-api-utils@2.1.0(typescript@5.8.3):
     dependencies:
       typescript: 5.8.3
+
+  ts-pattern@5.8.0: {}
 
   tslib@2.8.1: {}
 
