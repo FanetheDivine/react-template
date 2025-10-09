@@ -13,7 +13,7 @@ const Page: FC = () => {
     async (type) => {
       await sleep(2000)
       if (type !== 'error') return `type=${type} ${count++}`
-      throw new Error('error')
+      throw new Error('page-error')
     },
     {
       suspense: true,

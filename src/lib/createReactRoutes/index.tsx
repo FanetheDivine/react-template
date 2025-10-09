@@ -5,6 +5,8 @@ import type { RouteMap } from '~pages'
 
 /**
  * 创建react-router路由
+ * @param routeMap 由vite-fs-router-plugin生成的路由信息
+ * @param config 配置项
  * @example
  * ```
  * import { BrowserRouter, useRoutes } from 'react-router'
@@ -17,13 +19,18 @@ import type { RouteMap } from '~pages'
  */
 export function createReactRoutes(
   routeMap: RouteMap,
-  DefaultErrorComponent?: ComponentType<FallbackProps>,
-  defaultLoading?: ReactNode,
+  config: {
+    /** 默认的ErrorBoundary fallback组件 */
+    defaultErrorComponent?: ComponentType<FallbackProps>
+    /** 默认的Suspense fallback */
+    defaultLoading?: ReactNode
+  } = {},
 ): RouteObject[] {
   function convertRouteMap(routeMap?: RouteMap): RouteObject[] | undefined {
+    const { defaultErrorComponent, defaultLoading } = config
     if (!routeMap || routeMap.length === 0) return undefined
     const res: RouteObject[] = routeMap.map(function (item): RouteObject {
-      const Component = createComboComp(item.components, DefaultErrorComponent, defaultLoading)
+      const Component = createComboComp(item.components, defaultErrorComponent, defaultLoading)
       const element = Component ? (
         <Component>
           <Outlet></Outlet>
@@ -64,7 +71,7 @@ export function createReactRoutes(
  */
 function createComboComp(
   comps?: RouteMap[number]['components'],
-  DefaultErrorComponent?: ComponentType<FallbackProps>,
+  defaultErrorComponent?: ComponentType<FallbackProps>,
   defaultLoading?: ReactNode,
 ): ComponentType<any> | null {
   if (!comps || comps.length === 0) return null
@@ -73,7 +80,7 @@ function createComboComp(
   comps.forEach((item) => {
     let CurrentComp: ComponentType<any> | null = null
     if (item.key === 'error') {
-      let FallbackComponent: ComponentType<any> | undefined = DefaultErrorComponent
+      let FallbackComponent: ComponentType<any> | undefined = defaultErrorComponent
       if (item.value) {
         FallbackComponent = item.value
       }

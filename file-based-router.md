@@ -9,6 +9,8 @@
 
 文件名为`layout` `error` `loading` `page` `404`,拓展名为`tsx` `ts` `jsx` `js` `vue`的文件,会被插件收集.这些文件应当默认导出一个`react`组件.
 
+`error.tsx`应当默认导出类型为`FC<FallbackProps>`的组件以接受`ErrorBoundary`提供的错误信息.不要使用`useRouteError`.
+
 ### 构造路由
 
 上述的合法文件会形成这样的路由结构

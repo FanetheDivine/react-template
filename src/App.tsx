@@ -1,24 +1,19 @@
 import { FC } from 'react'
-import { BrowserRouter, useRoutes } from 'react-router'
+import { RouterProvider, createBrowserRouter } from 'react-router'
 import routeMap from '~pages'
 import { AntdProvider } from '@/lib/AntdProvider'
 import { SWRProvider } from '@/lib/SWRProvider'
 import { createReactRoutes } from '@/lib/createReactRoutes'
 
 const routes = createReactRoutes(routeMap)
+const router = createBrowserRouter(routes, { basename: import.meta.env.BASE_URL })
 
 export const App: FC = () => {
   return (
     <AntdProvider>
       <SWRProvider>
-        <BrowserRouter>
-          <Routes />
-        </BrowserRouter>
+        <RouterProvider router={router} />
       </SWRProvider>
     </AntdProvider>
   )
-}
-
-const Routes: FC = () => {
-  return useRoutes(routes)
 }
