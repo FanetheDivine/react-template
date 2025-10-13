@@ -1,4 +1,4 @@
-import { ComponentType, forwardRef, ReactNode, Suspense } from 'react'
+import { ComponentType, forwardRef, isValidElement, ReactNode, Suspense } from 'react'
 import { Skeleton } from 'antd'
 
 /** 为一个ReactNode包裹Suspense */
@@ -10,8 +10,7 @@ export function withSuspense<T extends ComponentType<any>>(
   arg: ReactNode | T,
   fallback: ReactNode = <Skeleton active />,
 ) {
-  if (typeof arg !== 'function') {
-    // 类组件和函数组件的类型都是function
+  if (isValidElement(arg)) {
     const children: ReactNode = arg
     return <Suspense fallback={fallback}>{children}</Suspense>
   } else {
