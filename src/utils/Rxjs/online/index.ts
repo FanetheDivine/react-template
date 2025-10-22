@@ -1,6 +1,7 @@
 import { Observable, retry, share } from 'rxjs'
 
-const online$ = new Observable<void>((subscriber) => {
+/** 网络重连时触发流 */
+export const online$ = new Observable<void>((subscriber) => {
   const handleOnline = () => {
     subscriber.next()
   }
