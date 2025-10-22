@@ -19,7 +19,7 @@
 - `classnames` 使用`clsx` `tailwind-merge`合并样式
 - `sleep` 等待一段时间
 - `withSuspense` 为`ReactNode`或者一个组件包裹`Suspense`
-- `RxjsOperators` 自定义rxjs管道运算符
+- `Rxjs` 自定义rxjs运算符和流
 
 ## hooks
 
