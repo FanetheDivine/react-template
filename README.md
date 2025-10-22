@@ -8,6 +8,7 @@
 - daysjs 日期时间处理工具
 - swr [管理网络请求](./useSWR.md)
 - lodash-es 常见函数
+- rxjs 处理复杂、嵌套、多状态回调函数
 - [基于文件的路由](./file-based-router.md)
 
 ## utils
@@ -18,6 +19,7 @@
 - `classnames` 使用`clsx` `tailwind-merge`合并样式
 - `sleep` 等待一段时间
 - `withSuspense` 为`ReactNode`或者一个组件包裹`Suspense`
+- `RxjsOperators` 自定义rxjs管道运算符
 
 ## hooks
 
