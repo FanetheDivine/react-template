@@ -1,7 +1,9 @@
-import { ComponentType, ReactNode, Suspense } from 'react'
-import { ErrorBoundary, FallbackProps } from 'react-error-boundary'
+import { ComponentType, Fragment, ReactNode } from 'react'
+import { FallbackProps } from 'react-error-boundary'
 import { Outlet, RouteObject } from 'react-router'
+import { match, P } from 'ts-pattern'
 import type { RouteMap } from '~pages'
+import { withErrorBoundary, withSuspense } from '@/utils'
 
 /**
  * 创建react-router路由
@@ -66,8 +68,8 @@ export function createReactRoutes(
 /**
  * 做如下转换
  * [Comp1,Comp2] -> props=><Comp1><Comp2>{props.children}</Comp2><Comp1>
- * 对于key为loading的组件 使用Suspense
  * 对于key为error的组件 使用ErrorBoundary
+ * 对于key为loading的组件 使用Suspense
  */
 function createComboComp(
   comps?: RouteMap[number]['components'],
@@ -77,41 +79,38 @@ function createComboComp(
   if (!comps || comps.length === 0) return null
 
   let ResultComp: ComponentType<any> | null = null
-  comps.forEach((item) => {
-    let CurrentComp: ComponentType<any> | null = null
-    if (item.key === 'error') {
-      let FallbackComponent: ComponentType<any> | undefined = defaultErrorComponent
-      if (item.value) {
-        FallbackComponent = item.value
-      }
-      if (FallbackComponent) {
-        CurrentComp = (props) => (
-          <ErrorBoundary FallbackComponent={FallbackComponent}>{props.children}</ErrorBoundary>
+  // 数组头是外部组件 尾是内部组件 需要自内向外构造组件包裹关系
+  comps.toReversed().forEach((item) => {
+    match(item)
+      // key为layout 值存在 用当前组件包裹ResultComp
+      .with({ key: 'layout', value: P.nonNullable.select() }, (CurrentComp) => {
+        const NonNullableResultComp = ResultComp ?? Fragment
+        ResultComp = (props) => (
+          <CurrentComp>
+            <NonNullableResultComp {...props} />
+          </CurrentComp>
         )
-      }
-    } else if (item.key === 'loading') {
-      let fallback: ReactNode | undefined = defaultLoading
-      if (item.value) {
-        const _Comp = item.value
-        fallback = <_Comp />
-      }
-      if (fallback) {
-        CurrentComp = (props) => <Suspense fallback={fallback}>{props.children}</Suspense>
-      }
-    } else {
-      CurrentComp = item.value
-    }
-    if (!CurrentComp) return
-    if (ResultComp) {
-      const TempComp = ResultComp
-      ResultComp = (props) => (
-        <TempComp>
-          <CurrentComp>{props.children}</CurrentComp>
-        </TempComp>
-      )
-    } else {
-      ResultComp = CurrentComp
-    }
+      })
+      // key为error 有fallback组件的 使用errorboundary包裹ResultComp
+      .with({ key: 'error', value: P.select() }, (CurrentComp) => {
+        const FallbackComponent = CurrentComp ?? defaultErrorComponent
+        if (FallbackComponent) {
+          ResultComp = withErrorBoundary(ResultComp ?? Fragment, { FallbackComponent })
+        }
+      })
+      // key为loading 有fallback的 使用suspense包裹ResultComp
+      .with({ key: 'loading', value: P.select() }, (CurrentComp) => {
+        const fallback = CurrentComp ? <CurrentComp /> : defaultLoading
+        if (fallback) {
+          ResultComp = withSuspense(ResultComp ?? Fragment, fallback)
+        }
+      })
+      // 其他类型的 使用当前组件替换子组件
+      .with({ value: P.nonNullable.select() }, (CurrentComp) => {
+        ResultComp = CurrentComp
+      })
+      .otherwise(() => {})
   })
+
   return ResultComp
 }
