@@ -1,7 +1,9 @@
-import { ComponentType, ReactNode, Suspense } from 'react'
-import { ErrorBoundary, FallbackProps } from 'react-error-boundary'
+import { ComponentType, ReactNode } from 'react'
+import { FallbackProps } from 'react-error-boundary'
 import { Outlet, RouteObject } from 'react-router'
+import { match, P } from 'ts-pattern'
 import type { RouteMap } from '~pages'
+import { withErrorBoundary, withSuspense } from '@/utils'
 
 /**
  * 创建react-router路由
@@ -66,8 +68,8 @@ export function createReactRoutes(
 /**
  * 做如下转换
  * [Comp1,Comp2] -> props=><Comp1><Comp2>{props.children}</Comp2><Comp1>
- * 对于key为loading的组件 使用Suspense
  * 对于key为error的组件 使用ErrorBoundary
+ * 对于key为loading的组件 使用Suspense
  */
 function createComboComp(
   comps?: RouteMap[number]['components'],
@@ -75,43 +77,35 @@ function createComboComp(
   defaultLoading?: ReactNode,
 ): ComponentType<any> | null {
   if (!comps || comps.length === 0) return null
+  // 数组头是外部组件 尾是内部组件 需要自内向外构造组件包裹关系
+  const ResultComp = comps.toReversed().reduce(
+    (ResultComp, current) => {
+      const { key, value } = current
+      const currentComp = match({ ResultComp, key })
+        // key为error的 应当包裹子组件
+        .with({ ResultComp: P.nonNullable.and(P.select()), key: 'error' }, (ResultComp) => {
+          // 如果有fallback组件 使用errorboundary包裹ResultComp
+          const FallbackComponent = value ?? defaultErrorComponent
+          return FallbackComponent
+            ? withErrorBoundary(ResultComp, { FallbackComponent })
+            : ResultComp
+        })
+        // key为error的 应当包裹子组件
+        .with({ ResultComp: P.nonNullable.and(P.select()), key: 'loading' }, (ResultComp) => {
+          // 如果有fallback组件 使用suspense包裹ResultComp
+          const FallbackComp = value
+          const fallback = FallbackComp ? <FallbackComp /> : defaultLoading
+          return fallback ? withSuspense(ResultComp, fallback) : ResultComp
+        })
+        // 非error loading的 使用当前组件替换子组件
+        .with({ key: P.not(P.union('error', 'loading')) }, () => {
+          return value ?? null
+        })
+        .otherwise(() => null)
+      return currentComp
+    },
+    null as ComponentType<any> | null,
+  )
 
-  let ResultComp: ComponentType<any> | null = null
-  comps.forEach((item) => {
-    let CurrentComp: ComponentType<any> | null = null
-    if (item.key === 'error') {
-      let FallbackComponent: ComponentType<any> | undefined = defaultErrorComponent
-      if (item.value) {
-        FallbackComponent = item.value
-      }
-      if (FallbackComponent) {
-        CurrentComp = (props) => (
-          <ErrorBoundary FallbackComponent={FallbackComponent}>{props.children}</ErrorBoundary>
-        )
-      }
-    } else if (item.key === 'loading') {
-      let fallback: ReactNode | undefined = defaultLoading
-      if (item.value) {
-        const _Comp = item.value
-        fallback = <_Comp />
-      }
-      if (fallback) {
-        CurrentComp = (props) => <Suspense fallback={fallback}>{props.children}</Suspense>
-      }
-    } else {
-      CurrentComp = item.value
-    }
-    if (!CurrentComp) return
-    if (ResultComp) {
-      const TempComp = ResultComp
-      ResultComp = (props) => (
-        <TempComp>
-          <CurrentComp>{props.children}</CurrentComp>
-        </TempComp>
-      )
-    } else {
-      ResultComp = CurrentComp
-    }
-  })
   return ResultComp
 }
