@@ -20,6 +20,7 @@
 - `sleep` 等待一段时间
 - `isReactNode` 判断一个值是不是`ReactNode`
 - `withSuspense` 为`ReactNode`或者一个组件包裹`Suspense`
+- `withErrorBoundary` 为`ReactNode`或者一个组件包裹`ErrorBoundary`
 - `Rxjs` 自定义rxjs运算符和流
 
 ## hooks
