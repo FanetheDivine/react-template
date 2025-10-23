@@ -8,7 +8,7 @@ export function withSuspense<T extends ComponentType<any>>(Comp: T, fallback?: R
 
 export function withSuspense<T extends ComponentType<any>>(
   arg: ReactNode | T,
-  fallback: ReactNode = <Skeleton active />,
+  fallback: ReactNode = <Skeleton active className='p-4' />,
 ) {
   if (isValidElement(arg)) {
     const children: ReactNode = arg
