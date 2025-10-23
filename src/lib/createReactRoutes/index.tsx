@@ -1,4 +1,4 @@
-import { ComponentType, Fragment, PropsWithChildren, ReactNode } from 'react'
+import { ComponentType, Fragment, ReactNode } from 'react'
 import { FallbackProps } from 'react-error-boundary'
 import { Outlet, RouteObject } from 'react-router'
 import { match, P } from 'ts-pattern'
@@ -82,12 +82,12 @@ function createComboComp(
   // 数组头是外部组件 尾是内部组件 需要自内向外构造组件包裹关系
   comps.toReversed().forEach((item) => {
     match(item)
-      // key为layout 值存在 用当前组件包裹子组件
+      // key为layout 值存在 用当前组件包裹ResultComp
       .with({ key: 'layout', value: P.nonNullable.select() }, (CurrentComp) => {
         const NonNullableResultComp = ResultComp ?? Fragment
-        ResultComp = (props: PropsWithChildren) => (
+        ResultComp = (props) => (
           <CurrentComp>
-            <NonNullableResultComp>{props.children}</NonNullableResultComp>
+            <NonNullableResultComp {...props} />
           </CurrentComp>
         )
       })
