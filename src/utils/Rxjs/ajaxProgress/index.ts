@@ -3,6 +3,7 @@ import type { AxiosResponse, AxiosRequestConfig, AxiosProgressEvent } from 'axio
 import { Observable } from 'rxjs'
 import { match } from 'ts-pattern'
 
+/** 流数据类型 包括progress事件和请求的结果 */
 export type AjaxProgressData<T = any, R = AxiosResponse<T>> =
   | {
       type: 'upload' | 'download'
