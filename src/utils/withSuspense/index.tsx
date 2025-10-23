@@ -1,5 +1,6 @@
-import { ComponentType, forwardRef, isValidElement, ReactNode, Suspense } from 'react'
+import { ComponentType, forwardRef, ReactNode, Suspense } from 'react'
 import { Skeleton } from 'antd'
+import { isReactNode } from '../isReactNode'
 
 /** 为一个ReactNode包裹Suspense */
 export function withSuspense(children: ReactNode, fallback?: ReactNode): ReactNode
@@ -10,9 +11,7 @@ export function withSuspense<T extends ComponentType<any>>(
   arg: ReactNode | T,
   fallback: ReactNode = <Skeleton active className='p-4' />,
 ) {
-  // react组件可能是函数或对象
-  // 通过instanceof排除以上两项 并用isValidElement判断arg是不是react节点
-  if (!(arg instanceof Object) || isValidElement(arg)) {
+  if (isReactNode(arg)) {
     const children: ReactNode = arg
     return <Suspense fallback={fallback}>{children}</Suspense>
   } else {
