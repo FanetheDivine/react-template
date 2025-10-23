@@ -18,6 +18,7 @@
 - `loadFile` 函数式加载本地文件
 - `classnames` 使用`clsx` `tailwind-merge`合并样式
 - `sleep` 等待一段时间
+- `isReactNode` 判断一个值是不是`ReactNode`
 - `withSuspense` 为`ReactNode`或者一个组件包裹`Suspense`
 - `Rxjs` 自定义rxjs运算符和流
 
