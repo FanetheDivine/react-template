@@ -1,4 +1,4 @@
-import { ComponentType, forwardRef, isValidElement, ReactNode } from 'react'
+import { ComponentType, forwardRef, ReactNode } from 'react'
 import {
   ErrorBoundary,
   ErrorBoundaryPropsWithComponent,
@@ -6,6 +6,7 @@ import {
   ErrorBoundaryPropsWithRender,
 } from 'react-error-boundary'
 import { Result } from 'antd'
+import { isReactNode } from '../isReactNode'
 
 /** ErrorBoundary不包含children的props */
 export type ErrorBoundaryPropsWithoutChildren =
@@ -30,9 +31,7 @@ export function withErrorBoundary<T extends ComponentType<any>>(
     fallback: <Result status='error' />,
   },
 ) {
-  // react组件可能是函数或对象
-  // 通过instanceof排除以上两项 并用isValidElement判断arg是不是react节点
-  if (!(arg instanceof Object) || isValidElement(arg)) {
+  if (isReactNode(arg)) {
     const children: ReactNode = arg
     return <ErrorBoundary {...errorBoundaryProps}>{children}</ErrorBoundary>
   } else {
