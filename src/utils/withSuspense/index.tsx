@@ -10,7 +10,9 @@ export function withSuspense<T extends ComponentType<any>>(
   arg: ReactNode | T,
   fallback: ReactNode = <Skeleton active className='p-4' />,
 ) {
-  if (isValidElement(arg)) {
+  // react组件可能是函数或对象
+  // 通过instanceof排除以上两项 并用isValidElement判断arg是不是react节点
+  if (!(arg instanceof Object) || isValidElement(arg)) {
     const children: ReactNode = arg
     return <Suspense fallback={fallback}>{children}</Suspense>
   } else {
