@@ -1,12 +1,11 @@
 import { FC, PropsWithChildren } from 'react'
-import { AutoFill } from '@/styles'
 import { cn } from '@/utils'
 
 const Layout: FC<PropsWithChildren> = (props) => {
   return (
-    <div className={cn(AutoFill, 'flex flex-col')}>
+    <div className={cn('flex h-full w-full flex-col')}>
       <div className='h-20 bg-black text-white'>layout</div>
-      <div className={cn(AutoFill, 'mt-20')}>{props.children}</div>
+      <div className={cn('mt-20 flex-1')}>{props.children}</div>
     </div>
   )
 }

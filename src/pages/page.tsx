@@ -2,7 +2,6 @@ import { FC, useState } from 'react'
 import { Link } from 'react-router'
 import { Button, Space } from 'antd'
 import useSWR from 'swr'
-import { AutoFill, Scrollbar } from '@/styles'
 import { loadFile, sleep, cn } from '@/utils'
 
 let count = 0
@@ -20,7 +19,7 @@ const Page: FC = () => {
     },
   )
   return (
-    <div className={cn(AutoFill, 'overflow-auto', Scrollbar)}>
+    <div className={cn('flex h-full w-full flex-col overflow-auto')}>
       <div className='flex min-h-[1000px] flex-col'>
         <Button
           onClick={async () => {

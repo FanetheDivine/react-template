@@ -76,7 +76,6 @@ function convertRouteComponent(route: Route, routeImports: RouteImports) {
   const mode = getImportMode(route)
   const components = componentKeys
     .map((key) => ({ key, filePath: route.components.get(key) }))
-    .filter((item) => item.filePath)
     .map((item) => {
       // 所有可选组件都展示出来 缺失的用null填补
       const value = item.filePath
