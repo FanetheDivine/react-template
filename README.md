@@ -33,7 +33,7 @@
 
 ## 其他
 
-- `@/styles`定义了常见的样式和`@minix`,用于滚动条和其他通用场景
+- `@/styles`定义了绝对定位的样式 定义了滚动条的样式 将所有标签默认设置为`overflow:hidden`
 - `@/types`定义了常见的类型
   - `Style` `className`和`style`的类型
   - `ValueController` `value`&`onChange`
