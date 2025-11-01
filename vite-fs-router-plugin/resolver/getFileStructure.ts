@@ -11,10 +11,7 @@ export type Directory = {
  * @param paths 路径数组
  * @param pageSrc 不参与解析的根路径
  */
-export function getFileStructure(
-  paths: readonly string[],
-  pageSrc: string,
-): Directory {
+export function getFileStructure(paths: readonly string[], pageSrc: string): Directory {
   const fileStructure: Directory = {
     dirName: '/',
     files: new Map(),
