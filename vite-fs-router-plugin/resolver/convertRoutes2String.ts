@@ -108,6 +108,8 @@ function convertImportCode(mode: ImportMode, filePath: string, routeImports: Rou
  * '/'路径的layout error loading才会被静态导入
  */
 function getImportMode(route: Route): ImportMode {
+  // pages/下的所有组件全部动态导入 由全局suspense处理
+  return 'async'
   if (route.path === '/' && route.type === 'wrapper') {
     return 'sync'
   }

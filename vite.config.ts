@@ -7,14 +7,23 @@ import fsRouter from './vite-fs-router-plugin/index.js'
 
 // https://vitejs.dev/config/
 export default defineConfig((options) => {
+  const isAnalyzeMode = options.mode === 'analyze'
   const plugins: PluginOption[] = [react(), tailwindcss(), fsRouter()]
-  if (options.mode === 'analyze') {
+  if (isAnalyzeMode) {
     plugins.push(
-      visualizer({ filename: './dist/stats.html', gzipSize: true, brotliSize: true, open: true }),
+      visualizer({
+        filename: './dist/stats.html',
+        open: true,
+        sourcemap: true,
+      }),
     )
   }
   return {
     plugins,
+    build: {
+      sourcemap: isAnalyzeMode ? 'inline' : false,
+      minify: !isAnalyzeMode,
+    },
     resolve: {
       alias: {
         '@': path.resolve(__dirname, './src'),
