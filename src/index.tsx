@@ -3,11 +3,11 @@ import ReactDOM from 'react-dom/client'
 import { Outlet, RouterProvider, createBrowserRouter } from 'react-router'
 import routeMap from '~pages'
 import '@/locales'
+import { withErrorBoundary, withSuspense } from '@/utils'
+import { DefaultErrorFallback } from '@/components/DefaultErrorFallback'
+import { DefaultLoadingFallback } from '@/components/DefaultLoadingFallback'
 import { createReactRoutes } from '@/lib/createReactRoutes'
 import '@/styles/tailwind.css'
-import { DefaultErrorFallback } from './components/DefaultErrorFallback'
-import { DefaultLoadingFallback } from './components/DefaultLoadingFallback'
-import { withErrorBoundary, withSuspense } from './utils'
 
 const AntdProvider = lazy(() => import('@/lib/AntdProvider'))
 const SWRProvider = lazy(() => import('@/lib/SWRProvider'))
