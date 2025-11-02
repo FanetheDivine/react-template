@@ -1,11 +1,14 @@
 import { FC, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router'
-import { Button, Space } from 'antd'
+import { Button, Input, Space } from 'antd'
 import useSWR from 'swr'
 import { loadFile, sleep, cn } from '@/utils'
 
 let count = 0
 const Page: FC = () => {
+  const { t, i18n } = useTranslation('common')
+  const [text, setText] = useState('')
   const [type, setType] = useState<'v1' | 'v2' | 'error'>('v1')
   const { data, mutate, isValidating } = useSWR(
     () => type,
@@ -20,6 +23,12 @@ const Page: FC = () => {
   )
   return (
     <div className={cn('flex h-full w-full flex-col overflow-auto')}>
+      <div className='flex flex-none flex-col'>
+        <span>test i18n :{t('test')}</span>
+        <span>current lng:{i18n.language}</span>
+        <Input value={text} onChange={(e) => setText(e.target.value)} />
+        <Button onClick={() => i18n.changeLanguage(text)}>set lng</Button>
+      </div>
       <div className='flex min-h-[1000px] flex-col'>
         <Button
           onClick={async () => {
