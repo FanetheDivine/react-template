@@ -2,14 +2,16 @@ import { lazy } from 'react'
 import ReactDOM from 'react-dom/client'
 import { Outlet, RouterProvider, createBrowserRouter } from 'react-router'
 import routeMap from '~pages'
+import '@/locales'
+import { withErrorBoundary, withSuspense } from '@/utils'
+import { DefaultErrorFallback } from '@/components/DefaultErrorFallback'
+import { DefaultLoadingFallback } from '@/components/DefaultLoadingFallback'
 import { createReactRoutes } from '@/lib/createReactRoutes'
 import '@/styles/tailwind.css'
-import { DefaultErrorFallback } from './components/DefaultErrorFallback'
-import { DefaultLoadingFallback } from './components/DefaultLoadingFallback'
-import { withErrorBoundary, withSuspense } from './utils'
 
 const AntdProvider = lazy(() => import('@/lib/AntdProvider'))
 const SWRProvider = lazy(() => import('@/lib/SWRProvider'))
+const GlobalNotFound = lazy(() => import('@/lib/GlobalNotFound'))
 
 const routes = createReactRoutes(routeMap, {
   defaultLoading: <DefaultLoadingFallback />,
@@ -29,7 +31,13 @@ const router = createBrowserRouter(
           </AntdProvider>,
         ),
       ),
-      children: routes,
+      children: [
+        ...routes,
+        {
+          path: '*',
+          element: <GlobalNotFound />,
+        },
+      ],
     },
   ],
   { basename: import.meta.env.BASE_URL },

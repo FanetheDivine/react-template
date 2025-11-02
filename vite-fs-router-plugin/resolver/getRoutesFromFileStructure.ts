@@ -12,10 +12,9 @@ export type Route = {
    * 组件类型
    * layout loading error为wrapper 需要包裹其他组件
    * page为page 直接提供内容
-   * 404为404
    * 如果本级路由是剩余参数 则为rest
    */
-  type: 'wrapper' | 'page' | '404' | 'rest'
+  type: 'wrapper' | 'page' | 'rest'
   /** 当前路由的所有文件 */
   components: Directory['files']
 }
@@ -33,7 +32,7 @@ export function getRoutesFromFileStructure(fileStructure: Directory): Route {
     return route
   }
 
-  // 依次向children中加入以下路由 page 静态子路由 动态子路由 剩余子路由 404
+  // 依次向children中加入以下路由 page 静态子路由 动态子路由 剩余子路由
   const route: Route = {
     path,
     pathType,
@@ -69,15 +68,6 @@ export function getRoutesFromFileStructure(fileStructure: Directory): Route {
     route.children.push(...childrenRoutes)
   }
 
-  if (fileStructure.files.get('404')) {
-    if (!route.children) route.children = []
-    route.children.push({
-      path: '*',
-      pathType: 'rest',
-      type: '404',
-      components: fileStructure.files,
-    })
-  }
   return route
 }
 
