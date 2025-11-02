@@ -11,7 +11,7 @@ export const DefaultError: FC<FallbackProps> = (props) => {
     <Result
       className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-4/5'
       status={'error'}
-      title='页面错误'
+      title={tc('pageError')}
       subTitle={error?.message}
       extra={[
         <Button key='retry' type='primary' icon={<ReloadOutlined />} onClick={resetErrorBoundary}>
