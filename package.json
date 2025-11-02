@@ -8,8 +8,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "lint": "eslint src/ ",
-    "prettier": "prettier --write src/",
-    "prepare": "husky"
+    "prettier": "prettier --write src/"
   },
   "dependencies": {
     "@ant-design/cssinjs": "^1.23.0",
@@ -36,19 +35,15 @@
     "zustand": "^5.0.3"
   },
   "devDependencies": {
-    "@commitlint/cli": "^19.3.0",
-    "@commitlint/config-conventional": "^19.2.2",
     "@eslint/js": "^9.22.0",
     "@trivago/prettier-plugin-sort-imports": "^5.2.2",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "@vitejs/plugin-react-swc": "^3.11.0",
-    "commitlint": "^19.3.0",
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.19",
     "globals": "^16.3.0",
-    "husky": "^9.1.7",
     "prettier": "3.6.2",
     "prettier-plugin-tailwindcss": "0.6.14",
     "tailwindcss": "^4",
