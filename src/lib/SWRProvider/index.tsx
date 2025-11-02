@@ -21,3 +21,5 @@ export const SWRProvider: FC<PropsWithChildren> = (props) => {
     </SWRConfig>
   )
 }
+
+export default SWRProvider

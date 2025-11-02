@@ -6,11 +6,11 @@ import { createReactRoutes } from '@/lib/createReactRoutes'
 import '@/styles/tailwind.css'
 import { DefaultError } from './components/DefaultError'
 import { DefaultLoading } from './components/DefaultLoading'
-import { AntdProvider } from './lib/AntdProvider'
-import { SWRProvider } from './lib/SWRProvider'
 import { withErrorBoundary, withSuspense } from './utils'
 
-const App = lazy(() => import('antd/es/app'))
+const AntdProvider = lazy(() => import('@/lib/AntdProvider'))
+const SWRProvider = lazy(() => import('@/lib/SWRProvider'))
+
 const routes = createReactRoutes(routeMap, {
   defaultLoading: <DefaultLoading />,
   defaultErrorComponent: DefaultError,
@@ -22,9 +22,11 @@ const router = createBrowserRouter(
       // suspense在外侧 是因为error也可能需要i18n语言包
       element: withSuspense(
         withErrorBoundary(
-          <App className='app'>
-            <Outlet />
-          </App>,
+          <AntdProvider>
+            <SWRProvider>
+              <Outlet />
+            </SWRProvider>
+          </AntdProvider>,
         ),
       ),
       children: routes,
@@ -33,10 +35,4 @@ const router = createBrowserRouter(
   { basename: import.meta.env.BASE_URL },
 )
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
-  <AntdProvider>
-    <SWRProvider>
-      <RouterProvider router={router} />
-    </SWRProvider>
-  </AntdProvider>,
-)
+ReactDOM.createRoot(document.getElementById('root')!).render(<RouterProvider router={router} />)

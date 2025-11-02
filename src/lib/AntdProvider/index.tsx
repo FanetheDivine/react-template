@@ -1,5 +1,5 @@
 import { FC, PropsWithChildren } from 'react'
-import { ConfigProvider } from 'antd'
+import { App, ConfigProvider } from 'antd'
 import zhCN from 'antd/locale/zh_CN'
 import { StyleProvider } from '@ant-design/cssinjs'
 
@@ -7,7 +7,11 @@ import { StyleProvider } from '@ant-design/cssinjs'
 export const AntdProvider: FC<PropsWithChildren> = (props) => {
   return (
     <StyleProvider layer>
-      <ConfigProvider locale={zhCN}>{props.children}</ConfigProvider>
+      <ConfigProvider locale={zhCN}>
+        <App className='app'> {props.children}</App>
+      </ConfigProvider>
     </StyleProvider>
   )
 }
+
+export default AntdProvider
