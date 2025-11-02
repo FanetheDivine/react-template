@@ -7,7 +7,7 @@ import { loadFile, sleep, cn } from '@/utils'
 
 let count = 0
 const Page: FC = () => {
-  const { t: tc, i18n } = useTranslation('common')
+  const { t, i18n } = useTranslation()
   const { modal } = App.useApp()
   const [text, setText] = useState('')
   const [type, setType] = useState<'v1' | 'v2' | 'error'>('v1')
@@ -25,7 +25,7 @@ const Page: FC = () => {
   return (
     <div className={cn('flex h-full w-full flex-col overflow-auto')}>
       <div className='flex flex-none flex-col'>
-        <span>test i18n :{tc('retry')}</span>
+        <span>test i18n :{t('common.retry')}</span>
         <span>current lng:{i18n.language}</span>
         <Input value={text} onChange={(e) => setText(e.target.value)} />
         <Button onClick={() => i18n.changeLanguage(text)}>set lng</Button>

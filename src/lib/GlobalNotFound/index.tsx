@@ -6,13 +6,13 @@ import { RollbackOutlined, HomeOutlined } from '@ant-design/icons'
 import { AbsoluteCenter } from '@/styles'
 
 export const GlobalNotFound: FC = () => {
-  const { t: tc } = useTranslation('common')
+  const { t } = useTranslation()
   const navigate = useNavigate()
   return (
     <Result
       className={AbsoluteCenter}
       status={'404'}
-      title={tc('page404')}
+      title={t('common.page404')}
       extra={[
         <Button
           key='goback'
@@ -20,10 +20,10 @@ export const GlobalNotFound: FC = () => {
           icon={<RollbackOutlined />}
           onClick={() => navigate(-1)}
         >
-          {tc('goback')}
+          {t('common.goback')}
         </Button>,
         <a href='/' key='homepage'>
-          <Button icon={<HomeOutlined />}>{tc('toHomepage')}</Button>
+          <Button icon={<HomeOutlined />}>{t('common.toHomepage')}</Button>
         </a>,
       ]}
     />

@@ -3,7 +3,7 @@ import i18n, { ReadCallback } from 'i18next'
 import LanguageDetector from 'i18next-browser-languagedetector'
 
 /** 支持的语言 */
-export const supportedLngs = ['zh-CN', 'en-US'] as const
+export const supportedLngs = ['zh', 'en'] as const
 
 /** 支持的语言 */
 export type SupportedLng = (typeof supportedLngs)[number]
@@ -15,7 +15,7 @@ i18n
     type: 'backend',
     // lng已经被i18n转化过
     read: async (lng: SupportedLng, ns: string, cb: ReadCallback) => {
-      import(`./${lng}/${ns}.json`)
+      import(`./resource/${lng}.json`)
         .then((res) => res.default)
         .then((resource) => cb(null, resource))
         .catch((e) => cb(e, null))

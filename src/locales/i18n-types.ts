@@ -1,10 +1,7 @@
-import 'i18next'
-import zhCommon from '@/locales/zh-CN/common.json'
+import locales from './resource/zh.json'
 
 declare module 'i18next' {
   interface CustomTypeOptions {
-    resources: {
-      common: typeof zhCommon
-    }
+    resources: typeof locales
   }
 }

@@ -28,5 +28,7 @@
   },
   "[javascript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
-  }
+  },
+  "i18n-ally.localesPaths": ["src/locales/resource"],
+  "i18n-ally.keystyle": "nested"
 }

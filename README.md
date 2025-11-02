@@ -37,4 +37,4 @@
   - `Style` `className`和`style`的类型
   - `ValueController` `value`&`onChange`
 - `@/components`定义了默认的fallback组件
-- `@/locales` 国际化相关
+- `@/locales` 国际化相关.`const { t } = useTranslation()`以这种形式进行翻译,便于插件捕获

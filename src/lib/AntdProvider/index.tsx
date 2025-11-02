@@ -20,14 +20,14 @@ export const AntdProvider: FC<PropsWithChildren> = (props) => {
     _lng$.subscribe((lng) => {
       setLocale(
         match(lng)
-          .with('zh-CN', () => antd_zh_CN)
-          .with('en-US', () => antd_en_US)
+          .with('zh', () => antd_zh_CN)
+          .with('en', () => antd_en_US)
           .exhaustive(),
       )
       dayjs.locale(
         match(lng)
-          .with('zh-CN', () => 'zh-cn')
-          .with('en-US', () => 'en')
+          .with('zh', () => 'zh-cn')
+          .with('en', () => 'en')
           .exhaustive(),
       )
     })
