@@ -4,16 +4,16 @@ import { Outlet, RouterProvider, createBrowserRouter } from 'react-router'
 import routeMap from '~pages'
 import { createReactRoutes } from '@/lib/createReactRoutes'
 import '@/styles/tailwind.css'
-import { DefaultError } from './components/DefaultError'
-import { DefaultLoading } from './components/DefaultLoading'
+import { DefaultErrorFallback } from './components/DefaultErrorFallback'
+import { DefaultLoadingFallback } from './components/DefaultLoadingFallback'
 import { withErrorBoundary, withSuspense } from './utils'
 
 const AntdProvider = lazy(() => import('@/lib/AntdProvider'))
 const SWRProvider = lazy(() => import('@/lib/SWRProvider'))
 
 const routes = createReactRoutes(routeMap, {
-  defaultLoading: <DefaultLoading />,
-  defaultErrorComponent: DefaultError,
+  defaultLoading: <DefaultLoadingFallback />,
+  defaultErrorComponent: DefaultErrorFallback,
 })
 const router = createBrowserRouter(
   [

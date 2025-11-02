@@ -3,7 +3,7 @@ import { FallbackProps } from 'react-error-boundary'
 import { Result, Button } from 'antd'
 import { ReloadOutlined } from '@ant-design/icons'
 
-export const DefaultError: FC<FallbackProps> = (props) => {
+export const DefaultErrorFallback: FC<FallbackProps> = (props) => {
   const { error, resetErrorBoundary } = props
   return (
     <Result
