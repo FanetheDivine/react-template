@@ -4,7 +4,7 @@ import { getFileStructure } from './resolver/getFileStructure.js'
 import { getRoutesFromFileStructure } from './resolver/getRoutesFromFileStructure.js'
 
 /** 可被解析为路由的文件名 */
-const legalFileNames = ['page', '404', 'loading', 'error', 'layout']
+const legalFileNames = ['page', 'loading', 'error', 'layout']
 
 export type PagesPluginOptions = {
   /**

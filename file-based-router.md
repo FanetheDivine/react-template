@@ -20,7 +20,6 @@ import Layout from 'layout'
 import Error from 'error'
 import Loading from 'loading'
 import Page from 'page'
-import NotFound from '404'
 
 const routes = [
   path:'/'
@@ -35,8 +34,7 @@ const routes = [
   ),
   children:[
     { index:true, element: <Page/> },
-    { path:'*', element: <NotFound/> }
-  ]
+  ],
 ]
 ```
 
@@ -44,6 +42,8 @@ const routes = [
 `error`则会由`ErrorBoundary`提供类型为`FallbackProps`的props  
 如果没有相应的文件 就不会构造对应的层级.例如 没有`error`,`ErrorBoundary`就不存在,连`page`也可以没有  
 `src/pages`对应于路由`/`其子文件夹的路由则是相对`src/pages`的路径
+
+404页面在index.tsx中 全局唯一
 
 ### 动态参数和剩余参数
 
@@ -62,8 +62,6 @@ import { useParams } from 'react-router'
 
 const { '*': rest } = useParams()
 ```
-
-值得注意的是,`404.tsx`会被转化为剩余参数,且始终位于最后.
 
 ### 功能性路由
 

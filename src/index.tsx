@@ -11,6 +11,7 @@ import { withErrorBoundary, withSuspense } from './utils'
 
 const AntdProvider = lazy(() => import('@/lib/AntdProvider'))
 const SWRProvider = lazy(() => import('@/lib/SWRProvider'))
+const GlobalNotFound = lazy(() => import('@/lib/GlobalNotFound'))
 
 const routes = createReactRoutes(routeMap, {
   defaultLoading: <DefaultLoading />,
@@ -30,7 +31,13 @@ const router = createBrowserRouter(
           </AntdProvider>,
         ),
       ),
-      children: routes,
+      children: [
+        ...routes,
+        {
+          path: '*',
+          element: <GlobalNotFound />,
+        },
+      ],
     },
   ],
   { basename: import.meta.env.BASE_URL },

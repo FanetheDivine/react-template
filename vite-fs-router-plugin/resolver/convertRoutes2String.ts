@@ -67,8 +67,6 @@ function convertRouteComponent(route: Route, routeImports: RouteImports) {
         return ['layout', 'error', 'loading']
       case 'page':
         return ['page']
-      case '404':
-        return ['404']
       case 'rest':
         return ['layout', 'error', 'loading', 'page']
     }
