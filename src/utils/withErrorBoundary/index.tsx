@@ -5,7 +5,7 @@ import {
   ErrorBoundaryPropsWithFallback,
   ErrorBoundaryPropsWithRender,
 } from 'react-error-boundary'
-import { DefaultError } from '@/components/DefaultError'
+import { DefaultErrorFallback } from '@/components/DefaultErrorFallback'
 import { isReactNode } from '../isReactNode'
 
 /** ErrorBoundary不包含children的props */
@@ -28,7 +28,7 @@ export function withErrorBoundary<T extends ComponentType<any>>(
 export function withErrorBoundary<T extends ComponentType<any>>(
   arg: ReactNode | T,
   errorBoundaryProps: ErrorBoundaryPropsWithoutChildren = {
-    FallbackComponent: DefaultError,
+    FallbackComponent: DefaultErrorFallback,
   },
 ) {
   if (isReactNode(arg)) {

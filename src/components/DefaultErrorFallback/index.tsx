@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { Result, Button } from 'antd'
 import { ReloadOutlined } from '@ant-design/icons'
 
-export const DefaultError: FC<FallbackProps> = (props) => {
+export const DefaultErrorFallback: FC<FallbackProps> = (props) => {
   const { error, resetErrorBoundary } = props
   const { t: tc } = useTranslation('common')
   return (
