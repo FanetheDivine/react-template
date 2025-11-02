@@ -25,7 +25,7 @@ i18n
     // 会将字符串自动转化到supportedLngs
     supportedLngs,
     nonExplicitSupportedLngs: false,
-    fallbackLng: 'en-US',
+    fallbackLng: 'en',
     interpolation: {
       escapeValue: false,
       skipOnVariables: false,
