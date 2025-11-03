@@ -15,7 +15,7 @@ i18n
   .use({
     type: 'backend',
     // lng已经被i18n转化过
-    // ns==='translation'表示全部文件
+    // ns==='translation'表示全部命名空间
     read: async (lng: SupportedLng, ns: string, cb: ReadCallback) => {
       import(`./resource/${lng}.json`)
         .then((res) => res.default)
