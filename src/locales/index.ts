@@ -1,6 +1,7 @@
 import { initReactI18next } from 'react-i18next'
 import i18n, { ReadCallback } from 'i18next'
 import LanguageDetector from 'i18next-browser-languagedetector'
+import { pick } from 'lodash-es'
 
 /** 支持的语言 */
 export const supportedLngs = ['zh', 'en'] as const
@@ -18,7 +19,7 @@ i18n
     read: async (lng: SupportedLng, ns: string, cb: ReadCallback) => {
       import(`./resource/${lng}.json`)
         .then((res) => res.default)
-        .then((data) => (ns === 'translation' ? data : data[ns]))
+        .then((data) => (ns === 'translation' ? data : pick(data, ns)))
         .then((resource) => cb(null, resource))
         .catch((e) => cb(e, null))
     },
