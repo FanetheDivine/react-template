@@ -14,9 +14,11 @@ i18n
   .use({
     type: 'backend',
     // lng已经被i18n转化过
+    // ns==='translation'表示全部文件
     read: async (lng: SupportedLng, ns: string, cb: ReadCallback) => {
       import(`./resource/${lng}.json`)
         .then((res) => res.default)
+        .then((data) => (ns === 'translation' ? data : data[ns]))
         .then((resource) => cb(null, resource))
         .catch((e) => cb(e, null))
     },
