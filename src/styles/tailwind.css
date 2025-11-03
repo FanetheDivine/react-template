@@ -4,7 +4,7 @@
 
 @layer basic {
   * {
-    @apply overflow-hidden relative;
+    @apply overflow-hidden;
 
     &::-webkit-scrollbar {
       width: 6px;
