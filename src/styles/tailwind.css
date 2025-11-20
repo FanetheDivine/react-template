@@ -27,12 +27,12 @@
   }
 
   html {
-    @apply overflow-auto
+    @apply overflow-auto min-w-80;
   }
 
   body,
   #root,
   .app {
-    @apply overflow-hidden min-w-100 min-h-150
+    @apply overflow-hidden;
   }
 }
