@@ -36,5 +36,7 @@
 - `@/types`定义了常见的类型
   - `Style` `className`和`style`的类型
   - `ValueController` `value`&`onChange`
+  - `isFunction` 判断是不是函数
+  - `ActionType` 用于描述复杂函数的参数
 - `@/components`定义了默认的fallback组件
 - `@/locales` 国际化相关.应当以这种形式进行翻译`const { t } = useTranslation()`,否则无法正确加载数据,插件也无法捕获翻译情况
