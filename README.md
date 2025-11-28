@@ -28,7 +28,7 @@
 
 - `useImmediateEffect` 在依赖项变化后 同步地执行副作用
 - `useSemiControlledValue` 取得一个值的半受控版本 可以自由变更 且在原始值变化时突变
-- `useComposition` 处理输入法合成问题
+- `useComposition` 处理输入法合成问题。如果需要防抖，只需要传入的 `onChange` 是一个防抖处理后的函数即可（例如使用 `ahooks` 的 `useDebounceFn` 或 `lodash-es` 的 `debounce`）
 
 ## 其他
 

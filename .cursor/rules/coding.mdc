@@ -31,7 +31,7 @@ alwaysApply: true
 - HTTP 请求通过 Axios 发起，useSWR 辅助（支持 Suspense）；若需要更复杂场景，可结合 `zustand`、`immer/use-immer`、`rxjs`、`ahooks` 等。
 - 后端接口封装统一放在 `@/api/XX`（按模块组织，如 `@/api/user`、`@/api/product`），由 useSWR 二次封装。
 - 组件需要受控/半受控行为时，搭配 `useSemiControlledValue` + `ValueController` 类型约束；同步外部状态使用 `useImmediateEffect`。
-- 输入法相关逻辑使用 `useComposition` 处理合成事件。
+- 输入法相关逻辑使用 `useComposition` 处理合成事件。如果需要防抖，只需要传入的 `onChange` 是一个防抖处理后的函数即可（例如使用 `ahooks` 的 `useDebounceFn` 或 `lodash-es` 的 `debounce`）。
 
 ## 导入与路径
 

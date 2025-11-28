@@ -21,6 +21,19 @@ export type CompositionProps<Options extends ValueControllerOptions = object> = 
  *
  * <Input {...compositionProps}/>
  * ```
+ * @example
+ * ```js
+ * // 如果需要防抖，只需要onChange是一个防抖处理后的函数即可
+ * import { useDebounceFn } from 'ahooks'
+ * const [search, setSearch] = useState()
+ * const { run: debouncedSetSearch } = useDebounceFn(setSearch, { wait: 300 })
+ * const { compositionProps } = useComposition({
+ *   value: search,
+ *   onChange: debouncedSetSearch
+ * })
+ *
+ * <Input {...compositionProps}/>
+ * ```
  */
 export function useComposition<StrictValue extends boolean>(
   valueController: ValueController<string, { updater: false; strictValue: StrictValue }>,
