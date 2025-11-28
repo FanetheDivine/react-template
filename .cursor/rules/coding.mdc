@@ -11,7 +11,7 @@ alwaysApply: true
 - **默认使用 `type`** 声明结构与工具类型，仅在需要声明合并/模块扩展时使用 `interface`。
 - 禁止 `enum`，改用联合字面量或常量对象。
 - 导出类型使用命名导出，局部类型就近声明。
-- `@/types/index.d.ts` 暴露 `Style`、`isFunction`、`ActionType` 等全局辅助类型；新增通用类型统一集中在 `@/types`。`ActionType` 适合描述“type + payload” 的联合结构：定义 `type ActionMap = { add: number; remove: undefined; patch?: Partial<User> }` 之后，可用 `ActionType<ActionMap>` 推导出 `{ type: 'add'; value: number } | { type: 'remove' } | { type: 'patch'; value?: Partial<User> }`；在 Reducer、命令分发或复杂事件流中按 `action.type` 做 `switch` 即可获得严格的 `value` 类型推断。
+- `@/types/index.d.ts` 暴露 `Style`、`isFunction`、`ActionType` 等全局辅助类型；新增通用类型统一集中在 `@/types`。`ActionType` 适合描述"type + payload" 的联合结构：定义 `type ActionMap = { add: number; remove: undefined; patch?: Partial<User> }` 之后，可用 `ActionType<ActionMap>` 推导出 `{ type: 'add'; value: number } | { type: 'remove'; value?: undefined } | { type: 'patch'; value?: Partial<User> }`。当 `ActionMap` 中的值为 `undefined` 时，生成的类型为 `value?: undefined` ，这样更加宽松 ，可以直接结构 `action` 的值，符合实际使用场景；在 Reducer、命令分发或复杂事件流中按 `action.type` 做 `switch` 即可获得严格的 `value` 类型推断。
 - `@/types/ValueController/index.ts` 声明自定义模块 `value-controller`，提供 `ValueController` 及相关工具类型，用来精准描述 `{ value, onChange }` 控制器的必填/可选、参数形态及是否支持函数式更新。
 
 ## React 组件与页面
