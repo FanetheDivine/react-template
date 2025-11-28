@@ -31,9 +31,8 @@ export function useComposition<StrictValue extends boolean>(
   })
   // 合成时更新本地value
   const onChange = useMemoizedFn<ChangeEventHandler<HTMLInputElement>>((e) => {
-    if (isComposing) {
-      onInnerChange(e.target.value)
-    } else {
+    onInnerChange(e.target.value)
+    if (!isComposing) {
       valueController.onChange?.((e.target as HTMLInputElement).value)
     }
   })
