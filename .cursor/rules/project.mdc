@@ -1,0 +1,55 @@
+---
+alwaysApply: true
+---
+
+# 项目总览
+
+- **框架**：React 18 + React Router 7，Vite 6 提供开发/构建，TypeScript `strict + noEmit`。
+- **UI & 样式**：Ant Design 5（`@ant-design/cssinjs` + `App` 级 Provider），Tailwind CSS 4 在 `src/styles/tailwind.css` 里集中引入并自定义滚动条/布局；`@/styles` 暴露 `AbsoluteCenter` 等常用 className。
+- **国际化**：`react-i18next` + `i18next`，语言资源位于 `src/locales/resource/*.json`，`supportedLngs = ['zh','en']`。
+- **状态与数据**：`zustand`、`immer/use-immer`、`ahooks`、`rxjs` 等工具辅助状态流；HTTP 请求通过 Axios 发起，使用 useSWR 封装（支持 Suspense）；API 客户端封装统一放在 `@/api` 下。
+- **工具链**：pnpm、ESLint 9（含 `eslint-plugin-react-hooks`、`react-refresh`）、Prettier 3（`@trivago/sort-imports` + `prettier-plugin-tailwindcss`）、Tailwind CLI 4、Rollup Visualizer（`pnpm build:analyze`）。
+- **路径别名**：`@/* -> src/*`，`tsconfig.json` 与 `vite.config.ts` 已同步，务必优先使用。
+
+# 运行入口与全局路由
+
+- `src/index.tsx` 读取 `~pages`（由 `vite-fs-router-plugin` 生成）并交给 `@/lib/createReactRoutes`，再包裹在自定义的全局 `withSuspense` + `withErrorBoundary` + `AntdProvider` + `SWRProvider` 之内，最后用 `RouterProvider` 渲染。
+- `@/lib/createReactRoutes` 会把文件路由的组件数组转换为 `RouteObject[]`，自动拼好 `layout/error/loading/page` 的嵌套关系，动态路由（`[slug]`、`[...rest]`）和括号路由 `(group)` 与 `file-based-router.md` 一致。
+- 根路由还会附加 `GlobalNotFound` 处理所有 `*` 路径，业务层无需再配置 404。
+
+# 目录速览
+
+```
+src/
+├─ api/                # 如果需要封装 API 应当放于次数
+├─ components/         # 全局组件
+├─ hooks/              # 复用 hooks（useImmediateEffect、useSemiControlledValue 等）
+├─ lib/                # Provider、路由构建、全局 404
+├─ locales/            # i18n 初始化与资源
+├─ pages/              # 基于文件的页面入口（page/layout/error/loading）
+├─ styles/             # Tailwind 全局样式与 className 常量
+├─ types/              # 公共类型、value-controller 声明
+├─ utils/              # `loadFile`、`withSuspense`、`cn` 等工具
+└─ index.tsx           # 应用入口
+```
+
+# 基于文件的路由插件
+
+- `vite-fs-router-plugin` 复用了 `vite-plugin-pages` 的解析流程，在 `src/pages` 中搜集 `page|layout|loading|error.(ts|tsx|js|jsx|vue)`。
+- 支持动态段（`[id]` → `:id`）、剩余段（`[...rest]` → `*`）、括号功能路由（`(withAuth)` 不改变 URL），细则详见仓库根部的 `file-based-router.md`。
+- 插件会生成 `~pages` 模块并导出结构化 `routeMap`，`@/lib/createReactRoutes` 会把它转换为 React Router 需要的 `RouteObject`。
+
+# 常用脚本
+
+| 命令                 | 说明                                     |
+| -------------------- | ---------------------------------------- |
+| `pnpm dev`           | 本地开发（Vite 开发服务器）              |
+| `pnpm build`         | 生产构建（Vite `build`）                 |
+| `pnpm build:analyze` | 构建 + `rollup-plugin-visualizer` 报告   |
+| `pnpm preview`       | 预览构建产物                             |
+| `pnpm lint`          | ESLint 9 检查 `src/`                     |
+| `pnpm prettier`      | Prettier 3（含 sort-imports & tailwind） |
+
+# 参考
+
+- React / React Router / SWR / Ant Design / Tailwind / i18next 官方文档或权威资料都可以引用，确保与当前依赖版本匹配。
